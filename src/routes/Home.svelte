@@ -10,6 +10,17 @@ let center = [-73.8820, 40.6167]
 
 </script>
 
+<div class="container ">
 {#each firstFiveItems as item}
     <Card basemap="topo-vector" center={center} scale=462232 geojson={item}/>
 {/each}
+</div>
+
+<style>
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+}
+</style>
