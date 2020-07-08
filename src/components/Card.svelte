@@ -7,11 +7,12 @@
   export let basemap;
   export let center;
   export let scale;
+  export let geojson = null
 </script>
 
 <div class="card">
   <div class="esri-map-view-wrapper">
-    <EsriMapView basemap={basemap} center={center} scale={scale}></EsriMapView>
+    <EsriMapView basemap={basemap} center={center} scale={scale} geojson={geojson}></EsriMapView>
   </div>
 
   <!-- <div class="top-link">

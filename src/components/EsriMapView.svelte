@@ -11,6 +11,7 @@
   export let basemap = 'streets';
   export let center = [0, 0];
   export let scale = 295828763;
+  export let geojson = null
 
   // reference to the DOM node where this MapView instance will be created
   // see "bind:this={viewContainer}" below
@@ -28,19 +29,23 @@
     const [
       EsriMap,
       MapView,
-      watchUtils
+      watchUtils,
+      GeoJSONLayer
     ] = await loadModules([
       'esri/Map',
       'esri/views/MapView',
-      'esri/core/watchUtils'
+      'esri/core/watchUtils',
+      'esri/layers/GeoJSONLayer'
     ], options);
 
     // construct a MapView instance
+    const map = new EsriMap({
+        basemap
+    })
+
     const view = new MapView({
       container: viewContainer,
-      map: new EsriMap({
-        basemap
-      }),
+      map,
       center,
       scale,
       ui: {
@@ -83,6 +88,14 @@
         view.rotation = $storeExtentInfo.rotation;
       }
     });
+
+    // Add geojson data by creating blob
+    if(geojson){
+      const blob = new Blob([JSON.stringify(geojson)], {type: "application/json"});
+      const url  = URL.createObjectURL(blob);
+      const layer = new GeoJSONLayer({ url });
+      map.add(layer)
+    }
   });
 
 </script>
