@@ -1,11 +1,18 @@
 <!-- App.svelte -->
 <script>
+  import { onMount } from 'svelte'
+  import { itemsStore } from './stores'
   import { Router, Link, Route } from "svelte-routing";
   import Home from "./routes/Home.svelte";
   import Analysis from "./routes/Analysis.svelte";
   import Nav from "./routes/Nav.svelte";
+  import getItems from "./utils/data"
 
   export let url = "";
+
+    onMount(() => {
+      getItems().then(items => itemsStore.set(items))
+    })
 </script>
 
 <Router url="{url}">
