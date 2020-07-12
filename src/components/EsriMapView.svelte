@@ -50,7 +50,7 @@
       scale,
       ui: {
         // add the compass widget which is not standard for a MapView
-        components: ['attribution', 'zoom', 'compass']
+        components: ['attribution']
       }
     });
 
