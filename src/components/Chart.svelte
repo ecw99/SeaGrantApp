@@ -1,38 +1,47 @@
 <script>
-var datasets = [{
-    "url": "https://services1.arcgis.com/0Lw2m57KEotYYFaA/arcgis/rest/services/survey123_b9b1d621d16543378b6d3a6b3e02b424/FeatureServer",
+//import cedar from '@esri/cedar'
+
+import { Chart } from '@esri/cedar'
+
+const datasets = [{
+    "url": "https://services1.arcgis.com/0Lw2m57KEotYYFaA/arcgis/rest/services/survey123_b9b1d621d16543378b6d3a6b3e02b424/FeatureServer/0",
     "name": "Reports",
     "query": {
-      "orderByFields": "Number_of_SUM DESC",
-      "groupByFieldsForStatistics": "Type",
+      "orderByFields": "EXTRACT(MONTH from please_enter_the_date_and_time_ ) ASC",
+      "groupByFieldsForStatistics": "EXTRACT(MONTH from please_enter_the_date_and_time_ )",
       "outStatistics": [{
-        "statisticType": "sum",
-        "onStatisticField": "Number_of",
-        "outStatisticFieldName": "Number_of_SUM"
+        "statisticType": "count",
+        "onStatisticField": "objectid",
+        "outStatisticFieldName": "objectid_COUNT"
       }]
-    }
+    },
+    "sqlFormat": "standard"
   }];
 
   // designate a one or more series to show the data on the chart
-  var series = [{
-    "category": {"field": "Type", "label": "Type"},
-    "value": {"field": "Number_of_SUM", "label": "Number of Students"},
-    "source": "schools"
+  const series = [{
+    "category": {"field": "EXPR_1", "label": "Creation Month"},
+    "value": {"field": "objectid_COUNT", "label": "Number of Students"}
   }];
 
   // optionally override any of the cart type's default styles
-  var overrides = {
+  const overrides = {
     "categoryAxis": {
       "labelRotation": -45
+    },
+    "valueAxis":{
+      "labelRotation": 180
     }
   }
 
   //create a cedar chart using the known 'bar' type
-  var elementId = 'chart';
-  var chart = new cedar.Chart(elementId, {"type": "bar"})
+  const elementId = 'chart';
+  const chart = new Chart(elementId, {"type": "bar"})
     .datasets(datasets)
     .series(series)
     .overrides(overrides);
+
+    console.log(chart)
 
   // render the chart
   chart.show();

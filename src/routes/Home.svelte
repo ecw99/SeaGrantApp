@@ -1,6 +1,7 @@
 <script>
 import { itemsStore } from '../stores'
 import Card from '../components/Card.svelte'
+import Chart from '../components/Chart.svelte'
 
 $: firstFiveItems = $itemsStore.splice(0,5)
 
@@ -10,11 +11,13 @@ let center = [-73.8820, 40.6167]
 
 </script>
 
-<div class="container ">
+
+<Chart />
+<!-- <div class="container ">
 {#each firstFiveItems as item}
     <Card basemap="topo-vector" center={center} scale=462232 geojson={item}/>
 {/each}
-</div>
+</div> -->
 
 <style>
 .container {
